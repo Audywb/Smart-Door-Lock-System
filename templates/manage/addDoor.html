@@ -1,0 +1,47 @@
+{% extends "layoutDashboard.html" %}
+
+{% block content %}
+<div class="container mb-4 mt-4">
+    <a href="{{url_for('dashboard')}}" type="button" class="btn btn-light mt-2"><i class="fa-solid fa-arrow-left"
+            style="color: #3698F9;"></i></a>
+    <h3 class="text-center mt-4">ADD DOOR</h3>
+    <div class="content mt-2">
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Door name</label>
+                <input class="form-control" name="door_name" type="text" placeholder="Ex. Door 1"
+                    aria-label="default input example" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Room name</label>
+                <input class="form-control" name="room_name" type="text" placeholder="Ex. Sc 252"
+                    aria-label="default input example" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Detail</label>
+                <input class="form-control" name="detail" type="text" placeholder="Detail"
+                    aria-label="default input example" required>
+            </div>
+            <!-- <div class="mb-3">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Status</label>
+                    <p class="text-muted">Select the active switch to allow general user access.</p>
+                </div>
+            </div> -->
+            <button type="submit" class="btn btn-primary mb-3">Save</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        {% if message == "Successfully added a door" %}
+        <p class="text-success">{{ message }}</p>
+        {% else %}
+        <p class="text-danger">{{ message }}</p>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <hr>
+    </div>
+    {% endblock %}

@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url("../images/v1015-104c.png");
+    background-color: #3698F9;
+    background-size: cover;
+}
+
+#navbar {
+    background-color: #3698F9;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+
+.home-text{
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 4rem;
+    line-height: 7rem;
+    margin-top: 5rem;
+}
+
+.image-logo-index{
+    width:100%;
+    object-fit: cover;
+}
+
+#btn-sign-in{
+    color: #000000;;
+    background-color: #ffffff;
+    border-color: #ffffff;
+    padding: 15px 40px 15px 40px;
+}
+
+#btn-sign-in:hover{
+    background-color: #dcdcdc;
+}
+
+.google-logo{
+    width: 30px;
+    object-fit: cover;
+}
+
+.card {
+    color: #53AFF8;
+    border: 1px solid  !important;
+    border-color: #f7f6f6 !important;
+    border-radius: 0.5rem !important;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    text-shadow: 2px 2px 4px #dfdfdf;
+    cursor: pointer;
+}
+
+.card:hover {
+    color: #ffffff;
+    background-color: #7dbeff;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    text-shadow: none;
+    transition: color 1s ease;
+}
+
+#card-text-status {
+    font-weight: 600;
+    padding: 30px 10px 30px 10px;
+}
+
+@media screen and (max-width: 500px) {
+    .image-logo-index{
+        position: relative;
+        z-index: -1;
+        margin-top: 2rem;
+        opacity: 50%;
+    }
+
+    .home-text{
+        margin-top: 3rem;
+        margin-left: 1rem;
+        font-size: 3rem;
+        line-height: 4rem;
+    }
+}

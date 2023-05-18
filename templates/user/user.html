@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block navbarL %}SMART DOORS LOCK SYSTEM{% endblock %}
+
+{% block navbarR %}
+<ul class="navbar-nav flex-row">
+    <img src={{photoUrl}} id="photoUrl" class="rounded-circle z-depth-0 mx-1" width="35px" height="35px">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDarkDropdownMenuLink" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            {{userName}}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+            <li><a class="dropdown-item" href="{{url_for('logout')}}">Log out</a></li>
+        </ul>
+    </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="container mb-4">
+    <div class="row justify-content-center mt-5">
+        <a href="{{ url_for('openDoor', id=door['_id']) }}"
+            class="col col-lg-3 col-sm-12 d-flex justify-content-center mb-4 text-decoration-none">
+            <div class="card p-2" style="width: 15rem;">
+                <div class="row">
+                    <div class="col-6 text-muted" style="opacity: 50%; font-size: 12px;">Room</div>
+                    <div class="col-6 text-muted text-end" style="opacity: 50%; font-size: 12px;">{{ door['room'] }}</div>
+                </div>
+                <div class="card-body" onclick="changeText(this)">
+                    <h1 class="card-text text-center text-uppercase" id="card-text-status">
+                        {% if door['status'] == 'close' %}lock{% else %}unlock{% endif %}
+                    </h1>
+                </div>
+                <div class="text-muted text-center">
+                    {{ door['name'] }}
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<script>
+    function changeText(id) {
+        var countdown = 5;
+        var intervalId = null;
+        console.log(id)
+        domm = '<p id="countdown" class="text-center text-warning" style="margin-bottom: 0; font-size: 14px;"></p> <h1 class="card-text text-center text-uppercase" id="card-text-status" style="font-size: 27px;">UNLOCK</h1>'
+        id.innerHTML = domm;
+
+        if (!intervalId) {
+            intervalId = setInterval(function () {
+                countdown--;
+                if (countdown === 0) {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                    // document.getElementById("countdown").innerHTML = "close in 5 seconds.";
+                } else {
+                    document.getElementById("countdown").innerHTML = "Lock in " + countdown + " seconds.";
+                }
+            }, 1000);
+        }
+    }
+</script>
+{% endblock %}

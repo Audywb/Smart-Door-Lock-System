@@ -1,0 +1,65 @@
+{% extends "layoutDashboard.html" %}
+
+{% block content %}
+<div class="container mb-4 mt-4">
+    <a href="{{url_for('dashboard')}}" type="button" class="btn btn-light mt-2"><i class="fa-solid fa-arrow-left"
+            style="color: #3698F9;"></i></a>
+    <h3 class="text-center mt-4">EDIT DOOR</h3>
+    <div class="content mt-2">
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Door name</label>
+                <input class="form-control" name="door_name" type="text" placeholder="Ex. Door 1"
+                    aria-label="default input example" value="{{ door['name'] }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Room name</label>
+                <input class="form-control" name="room_name" type="text" placeholder="Ex. Sc 252"
+                    aria-label="default input example" value="{{ door['room'] }}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Detail</label>
+                <input class="form-control" name="detail" type="text" placeholder="Detail"
+                    aria-label="default input example" value="{{ door['detail'] }}">
+            </div>
+            <div class="d-flex mb-2">
+                <button type="submit" class="btn btn-primary me-3">Save</button>
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Delete
+                </button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete door</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Confirm deleting {{ door['name'] }}.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <a href="{{ url_for('deleteDoor', id=door['_id']) }}" class="btn btn-danger"
+                                role="button">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        {% if message == "Successfully updated a door" %}
+        <p class="text-success">{{ message }}</p>
+        {% else %}
+        <p class="text-danger">{{ message }}</p>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <hr>
+    </div>
+    {% endblock %}

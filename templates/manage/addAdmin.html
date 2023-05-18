@@ -1,0 +1,44 @@
+{% extends "layoutDashboard.html" %}
+
+{% block content %}
+<div class="container mb-4">
+    <a href="{{url_for('manage')}}" type="button" class="btn btn-light mt-2"><i class="fa-solid fa-arrow-left"
+            style="color: #3698F9;"></i></a>
+    <h3 class="text-center mt-4">ADD ADMIN</h3>
+    <div class="content mt-2">
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input class="form-control" name="name" type="text" placeholder="Name - Surname"
+                    aria-label="default input example" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="email@ubu.ac.th" required>
+            </div>
+    </div>
+    <button type="submit" class="btn btn-primary mb-3">Save</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    {% if message == "Successfully added admin." %}
+    <p class="text-success">{{ message }}</p>
+    {% else %}
+    <p class="text-danger">{{ message }}</p>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <hr>
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Import .csv file : <a
+                href="https://docs.google.com/spreadsheets/d/1GNITN6QIlSO8B-9jJiEhHm8oxo_lJS_142JOJ7DEaR0/edit?usp=sharing"
+                target="_blank">Template link</a></label>
+            <input class="form-control" type="file" id="formFile" name="filename">
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Save</button>
+    </form>
+</div>
+{% endblock %}

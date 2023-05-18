@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block navbarL %}Select door{% endblock %}
+{% block content %}
+<hr style="background-color: #ffffff; margin: 0rem; height: 4px; opacity: 1;">
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h1 class="home-text">SMART DOORS LOCK SYSTEM</h1>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <div>
+                    {{ message }}
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <!-- <p class="text-white">Please log in with an administrator account.</p> -->
+        </div>
+        <div class="col-4 offset-1">
+            <img class="image-logo-index" src="{{url_for('static',filename='images/doorlocklogo2.png')}}" alt="logo">
+        </div>
+        <div class="col-12 mx-2 mb-4 text-center text-lg-start">
+            <p class="text-white fs-4">Select a door to unlock.</p>
+            <div class="dropdown">
+                <button class="btn btn-warning btn-lg dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Select Door
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    {% for door in doors %}
+                    <li><a class="dropdown-item" href="{{ url_for('user_unlock_door', id=door['_id']) }}">{{ door['name'] }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

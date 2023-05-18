@@ -1,0 +1,114 @@
+{% extends "layoutDashboard.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
+{% endblock %}
+{% block title %}Manage User{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <a id="btn-add" href="{{url_for('manage')}}" type="button" class="btn btn-light mt-2 mb-4"><i
+            class="fa-solid fa-arrow-left"></i> Admin</a>
+    <div class="row">
+        <div class="col">
+            <h3>User data table</h3>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <a href="{{url_for('addUser')}}" type="button" class="btn btn-outline-primary" id="btn-add">
+                Add user
+            </a>
+        </div>
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <br>
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="mt-4">
+        <form action="{{ url_for('deleteUser') }}" method="post">
+            <table id="data-table-user" class="table table-bordered table-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Door</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                        <!-- <th>Select</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user['studentID'] }}</td>
+                        <td>{{ user['userName'] }}</td>
+                        <td>{{ user['email'] }}</td>
+                        <td>
+                            {% for d in user['doors'] %}
+                            {{ d }},
+                            {% endfor %}
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ url_for('updateUser', id=user['_id']) }}">
+                                <button type="button" class="btn-update-delete"><i
+                                        class="fa-regular fa-pen-to-square"></i></i></button>
+                            </a>
+                        </td>
+                        <!-- <td class="text-center">
+                            <div>
+                                <button type="submit" class="btn-update-delete"><i
+                                        class="fa-regular fa-trash-can"></i></button>
+                                <button type="button" class="btn-update-delete" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </td> -->
+                        <td class="text-center">
+                            <div class="text-center">
+                                <input class="form-check-input" type="checkbox" value="{{ user['_id'] }}"
+                                    id="{{ user['userName'] }}" name="check_delete">
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="text-end mt-3">
+                <button type="button" class="btn btn-outline-danger mb-3" data-bs-toggle="modal"
+                    data-bs-target="#alldelete">Delete</button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="alldelete" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete user</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Confirm deleting selected user.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="{{url_for('static',filename='js/table.js')}}"></script>
+{% endblock %}

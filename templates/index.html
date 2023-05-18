@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<hr style="background-color: #ffffff; margin: 0rem; height: 4px; opacity: 1;">
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h1 class="home-text">SMART <br> DOORS LOCK <br> SYSTEM</h1>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <div>
+                    {{ message }}
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <!-- <p class="text-white">Please log in with an administrator account.</p> -->
+        </div>
+        <div class="col-4 offset-1">
+            <img class="image-logo-index" src="{{url_for('static',filename='images/doorlocklogo2.png')}}" alt="logo">
+        </div>
+        <div class="col-12 mb-4">
+            <a href="{{url_for('login')}}" type="button" class="btn btn-primary btn-lg rounded-pill"
+                id="btn-sign-in"><img class="google-logo" src="{{url_for('static',filename='images/google-logo.png')}}"
+                    alt="google_logo"> Sign in with Google</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

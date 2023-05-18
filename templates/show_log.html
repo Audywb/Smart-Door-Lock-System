@@ -1,0 +1,47 @@
+{% extends "layoutDashboard.html" %}
+
+{% block header %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
+{% endblock %}
+{% block title %}History{% endblock %}
+
+{% block content %}
+<div class="container mb-4">
+    <div class="row mt-5">
+        <div class="col-6 text-start">
+            <h4 class="text-muted">History <i class="fa-solid fa-history fs-6"></i></h4>
+        </div>
+        <hr>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <table id="data-table-logs" class="table table-bordered table-hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Studen ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Door name</th>
+                    <th>Unlock time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log['sID'] }}</td>
+                    <td>{{ log['name'] }}</td>
+                    <td>{{ log['email'] }}</td>
+                    <td>{{ log['doorName'] }}</td>
+                    <td>{{ log['unlockTime'].strftime('%d-%m-%Y %H:%M:%S') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="{{url_for('static',filename='js/table.js')}}"></script>
+{% endblock %}

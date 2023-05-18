@@ -1,0 +1,50 @@
+{% extends "layoutDashboard.html" %}
+
+{% block content %}
+<div class="container mb-4">
+    <a href="{{url_for('manageUser')}}" type="button" class="btn btn-light mt-2"><i class="fa-solid fa-arrow-left"
+            style="color: #3698F9;"></i></a>
+    <h3 class="text-center mt-4">EDIT USER</h3>
+    <form method="post">
+        <div class="content mt-2">
+            <div class="mb-3">
+                <label class="form-label">ID</label>
+                <input class="form-control" name="id" type="text" placeholder="Student ID"
+                    aria-label="default input example" value="{{studentID}}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input class="form-control" name="name" type="text" placeholder="Name - Surname"
+                    aria-label="default input example" value="{{name}}" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="email@ubu.ac.th"
+                    value="{{email}}" required>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" style="margin-bottom: 0;">Doors</label>
+            <p class="text-muted" style="margin-bottom: 0;">Choose a door that can be unlocked.</p>
+            {% for door in doors %}
+            <div class="form-check">
+                <input class="form-check-input" name="door" type="checkbox" value="{{ door['_id'] }}"
+                    id="flexCheck{{ door['name'] }}" {% if door['name'] in door_user %}checked{% endif %}>
+                <label class="form-check-label" for="flexCheck{{ door['name'] }}">
+                    {{ door['name'] }}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Save</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <p class="text-danger">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <hr>
+</div>
+{% endblock %}

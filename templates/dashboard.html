@@ -1,0 +1,103 @@
+{% extends "layoutDashboard.html" %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container mb-4">
+    <!-- <h1>{{userName}}</h1>
+    {{photoUrl}} -->
+    <!-- <h1>{{userEmail}}</h1> -->
+    <div class="row mt-5">
+        <div class="col-6 text-start">
+            <h4 class="text-muted">SMART DOORS LOCK SYSTEM</h4>
+        </div>
+        <div class="col-6 text-end">
+            <div class="col d-flex justify-content-end">
+                <a href="{{url_for('addDoor')}}" type="button" class="btn btn-outline-primary" id="btn-add">
+                    Add door <i class="fa-solid fa-door-open"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        {% for door in doors %}
+        <div class="col col-lg-3 mb-4 d-flex justify-content-center">
+            <div class="card p-2" style="width: 15rem;">
+                <div class="row">
+                    <div class="col-6 text-muted" style="opacity: 50%;">{{ door['room'] }}</div>
+                    <div class="col-6">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn-update-edit text-muted" data-bs-toggle="modal"
+                                data-bs-target="#modal{{ door['_id'] }}">
+                                <i class="fa-solid fa-qrcode"></i>
+                            </button>
+                            <form class="" action="{{ url_for('getDoor', id=door['_id']) }}" method="post">
+                                <button type="submit" class="btn-update-edit text-muted" style="opacity: 75%;"><i
+                                        class="fa-regular fa-pen-to-square"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ url_for('openDoor', id=door['_id']) }}" class="text-decoration-none">
+                    <div class="card-body" onclick="changeText(this)">
+                        <h1 class="card-text text-center text-uppercase" id="card-text-status">
+                            {% if door['status'] == 'close' %}lock{% else %}unlock{% endif %}
+                        </h1>
+                    </div>
+                    <div class="text-muted text-center" style="opacity: 75%;">
+                        {{ door['name'] }}
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modal{{ door['_id'] }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">QR Code {{ door['name'] }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-center">
+                            <img class="image-logo-index" src="../static/qrCode/{{ door['_id'] }}.png" alt="QRcode{{ door['name']}}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="{{ url_for('download_qr', id=door['_id']) }}" class="btn btn-primary" role="button">Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    function changeText(id) {
+        var countdown = 5;
+        var intervalId = null;
+        console.log(id)
+        domm = '<p id="countdown" class="text-center text-warning" style="margin-bottom: 0; font-size: 14px;"></p> <h1 class="card-text text-center text-uppercase" id="card-text-status" style="font-size: 27px;">UNLOCK</h1>'
+        id.innerHTML = domm;
+
+        if (!intervalId) {
+            intervalId = setInterval(function () {
+                countdown--;
+                if (countdown === 0) {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                    // document.getElementById("countdown").innerHTML = "close in 5 seconds.";
+                } else {
+                    document.getElementById("countdown").innerHTML = "Lock in " + countdown + " seconds.";
+                }
+            }, 1000);
+        }
+    }
+</script>
+<!-- close in 5 seconds. -->
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "layoutDashboard.html" %}
+
+{% block content %}
+<div class="container mb-4">
+    <a href="{{url_for('manage')}}" type="button" class="btn btn-light mt-2"><i class="fa-solid fa-arrow-left"
+            style="color: #3698F9;"></i></a>
+    <h3 class="text-center mt-4">EDIT ADMIN</h3>
+    {{ admin }}
+    <form method="post">
+        <div class="content mt-2">
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input class="form-control" name="name" type="text" placeholder="Name - Surname"
+                    aria-label="default input example" value="{{name}}" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="email@ubu.ac.th"
+                value="{{email}}" required>
+            </div>
+        </div>
+        <!-- <button type="submit">Submit</button> -->
+        <button type="submit" class="btn btn-primary mb-3">Save</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    {% if message == "Successfully added admin." %}
+    <p class="text-success">{{ message }}</p>
+    {% else %}
+    <p class="text-danger">{{ message }}</p>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <hr>
+    <!-- {% for todo in todos %}
+        <div class="todo">
+            <p>{{ todo['content'] }} <i>({{ todo['degree']}})</i></p>
+            <form method="POST" action="{{ url_for('delete', id=todo['_id']) }}">
+                <input type="submit" value="Delete Todo"
+                    onclick="return confirm('Are you sure you want to delete this entry?')">
+            </form>
+        </div>
+        {% endfor %} -->
+</div>
+{% endblock %}

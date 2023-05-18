@@ -1,0 +1,26 @@
+version: '3.8'
+services: 
+  app:
+    build: .
+    command: app.py
+    environment:
+      - REDIRECT_URL=dssipresent5.sci.ubu.ac.th
+    restart: always
+    ports:
+      - "9053:5000"
+    volumes:
+      - .:/app
+    depends_on:
+        - db
+    
+  db:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_DATABASE=door_lock_db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=*****
+    restart: always
+    volumes:
+      - ./init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
+    ports:
+      - 9054:27017
